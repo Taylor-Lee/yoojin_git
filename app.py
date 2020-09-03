@@ -1,56 +1,74 @@
-from pymongo import MongoClient
+# from flask import Flask, render_template, jsonify, request
+# from pymongo import MongoClient
+# import random
+#
+# app = Flask(__name__)
+#
+# client = MongoClient('localhost', 27017)  # mongoDB는 27017 포트로 돌아갑니다.
+# db = client.dbsparta
+#
+# @app.route('/')
+# def home():
+#     return render_template('index.html')
+#
+# @app.route('/showCat', methods=['GET'])
+# def read_articles():
+#     cats = list(db.cats.find({}, {'_id': False}))
+#     cat = random.choice(cats)
+#     return jsonify({'result': 'success', 'cat': cat})
+#
+# @app.route('/idolCat')
+# def idolCat():
+#     return render_template('idolCat.html')
+#
+# if __name__ == '__main__':
+#     app.run('0.0.0.0', port=5000, debug=True)
+#
+#     # app > div > div:nth-child(3) > div:nth-child(3) > div > div:nth-child(1) > div > div > div:nth-child(1) > div:nth-child(1) > figure > div > div._3A74U > div > div > a > div > img
+import random
 
 from flask import Flask, render_template, jsonify, request
+import requests
+from pymongo import MongoClient  # pymongo를 임포트 하기(패키지 인스톨 먼저 해야겠죠?)
 
 app = Flask(__name__)
 
-client = MongoClient('localhost', 27017)
-db = client.dbsparta
+client = MongoClient('localhost', 27017)  # mongoDB는 27017 포트로 돌아갑니다.
+db = client.dbsparta  # 'dbsparta'라는 이름의 db를 만들거나 사용합니다.
 
 
-# HTML 화면 보여주기
 @app.route('/')
 def home():
-    return render_template('index.html')
+    return render_template('idolCat.html')
 
 
-# API 역할을 하는 부분
-@app.route('/api/list', methods=['GET'])
-def show_stars():
-    # 1. db에서 mystar 목록 전체를 검색합니다. ID는 제외하고 like 가 많은 순으로 정렬합니다.
-    # 참고) find({},{'_id':False}), sort()를 활용하면 굿!
-    stars = list(db.mystar.find({}, {'_id': False}).sort('like', -1))
-    # 2. 성공하면 success 메시지와 함께 stars_list 목록을 클라이언트에 전달합니다.
-    return jsonify({'result': 'success', 'stars_list': stars})
+@app.route('/idolCat', methods=['GET'])
+def show_cat():
+    # 1. mongoDB에서 _id 값을 제외한 모든 데이터 조회해오기 (Read)
+    cats = list(db.cats.find({}, {'_id': 0}))
+    print("DB에서 cats 가져온 값:")
+    print(cats)
+
+    # Random 1개 선택
+    # cat = random.choice(cats)
+
+    # Random 2개 선택
+    randomCats = random.sample(cats, 2)
+
+    # 2. articles라는 키 값으로 article 정보 보내주기
+    return jsonify({'result': 'success', 'cats': randomCats})
 
 
-@app.route('/api/like', methods=['POST'])
-def like_star():
-    # 1. 클라이언트가 전달한 name_give를 name_receive 변수에 넣습니다.
-    name_receive = request.form['name_give']
+@app.route('/random', methods=['GET'])
+def random_cat():
+    return render_template('random.html')
 
-    # 2. mystar 목록에서 find_one으로 name이 name_receive와 일치하는 star를 찾습니다.
-    star = db.mystar.find_one({'name': name_receive})
-    # 3. star의 like 에 1을 더해준 new_like 변수를 만듭니다.
-    new_like = star['like'] + 1
+@app.route('/showCat', methods=['GET'])
+def read_articles():
+    cats = list(db.cats.find({}, {'_id': 0}))
+    cat = random.choice(cats)
 
-    # 4. mystar 목록에서 name이 name_receive인 문서의 like 를 new_like로 변경합니다.
-    # 참고: '$set' 활용하기!
-    db.mystar.update_one({'name': name_receive}, {'$set': {'like': new_like}})
-
-    # 5. 성공하면 success 메시지를 반환합니다.
-    return jsonify({'result': 'success'})
-
-
-@app.route('/api/delete', methods=['POST'])
-def delete_star():
-    # 1. 클라이언트가 전달한 name_give를 name_receive 변수에 넣습니다.
-    name_receive = request.form['name_give']
-    # 2. mystar 목록에서 delete_one으로 name이 name_receive와 일치하는 star를 제거합니다.
-    db.mystar.delete_one({'name': name_receive})
-    # 3. 성공하면 success 메시지를 반환합니다.
-    return jsonify({'result': 'success'})
-
+    return jsonify({'result': 'success', 'cat': cat})
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5000, debug=True)

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <title>랜덤이냥</title>
+
+    <style>
+        /*.wrap{*/
+        /*    heiht : 300px;*/
+        /*}*/
+        body {
+            height: 98vh;
+            background-color: black;
+        }
+    </style>
+    <script>
+      $(document).ready(function () {
+        showCat();
+      });
+
+      function showCat() {
+        $.ajax({
+          type: "GET",
+          url: "/showCat",
+          data: {},
+          success: function (response) {
+            let imgUrl = response['cat']['picture_path'];
+            $("#img-cat").attr("src", imgUrl);
+          }
+        })
+      }
+    </script>
+</head>
+<body onclick="showCat()">
+<div class="wrap">
+    <div>
+        <img id="img-cat" class="bottom"
+             src="https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png"/>
+    </div>
+</div>
+</body>
+</html>

@@ -48,8 +48,15 @@ def insert_all():
         'https://unsplash.com/s/photos/cat',
         'https://unsplash.com/s/photos/kitten',
         'https://unsplash.com/s/photos/cute-cat',
-        'https://unsplash.com/s/photos/puppy'
+        'https://unsplash.com/s/photos/black-cat',
+        'https://unsplash.com/s/photos/yellow-cat',
+        'https://unsplash.com/s/photos/tiger-cat',
+        'https://unsplash.com/s/photos/brown-cat',
+        'https://unsplash.com/s/photos/cute-jaguar-cat',
+        'https://unsplash.com/s/photos/house-cat',
+        'https://unsplash.com/s/photos/street-cat'
     ]
+
     for catUrl in catUrls:
         urls = get_urls(catUrl)
         for url in urls:

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+        <title>나의고양이찾기</title>
+
+        <style>
+            /*.wrapper {*/
+            /*        width: 1000px;*/
+            /*        height: auto;*/
+            /*        margin: 0;*/
+            /*    }*/
+
+            body {
+                /*display: flex;*/
+                /*flex-direction: column;*/
+                /*align-items: center;*/
+                /*justify-content: center;*/
+                /*width: 100%;*/
+                /*height: 100%;*/
+            }
+
+            .container {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: center;
+                /*width: 100%;*/
+                height: 100vh;
+            }
+
+            #left {
+                margin-right: 30px;
+            }
+
+            #leftImg {
+                /*position: absolute;*/
+                width: 400px;
+                /*order : 1*/
+            }
+
+            .centerImg {
+                position: absolute;
+                left:0;
+                right:0;
+                margin-left:auto;
+                margin-right:auto;
+                /*top: 50px;*/
+                /*left: 480px;*/
+                width: 150px;
+                /*order : 2*/
+            }
+
+            #rightImg {
+                /*position: absolute;*/
+                width: 400px;
+                /*left: 600px;*/
+                /*order: 3*/
+            }
+        </style>
+        <script>
+            $(document).ready(function () {
+                $("#leftImg").html("");
+                $("#rightImg").html("");
+                show_cat();
+            });
+
+            function show_cat() {
+                $.ajax({
+                    type: "GET",
+                    url: "/idolCat",
+                    data: {},
+                    success: function (response) {
+                        var catImages = response['cats'];
+                        $("#leftImg").attr("src", catImages[0]['picture_path']);
+                        $("#rightImg").attr("src", catImages[1]['picture_path']);
+                    }
+                })
+            }
+        </script>
+    </head>
+
+
+    <body>
+        <div class="container">
+            <span class="content" id="left">
+                <img id="leftImg"
+                     src="https://images.unsplash.com/photo-1560114928-40f1f1eb26a0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjI2MDAzfQ&w=1000&q=80">
+            </span>
+            <img class="centerImg" src="/static/idol.png"/>
+            <span class="content" id="right">
+                <img id="rightImg"
+                     src="https://images.unsplash.com/photo-1570725583091-09fba102e5d6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80">
+            </span>
+        </div>
+    </body>
+
+</html>
