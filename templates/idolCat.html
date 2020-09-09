@@ -6,20 +6,11 @@
 
         <title>나의고양이찾기</title>
 
-        <style>
-            /*.wrapper {*/
-            /*        width: 1000px;*/
-            /*        height: auto;*/
-            /*        margin: 0;*/
-            /*    }*/
+        <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@800&display=swap" rel="stylesheet">
 
-            body {
-                /*display: flex;*/
-                /*flex-direction: column;*/
-                /*align-items: center;*/
-                /*justify-content: center;*/
-                /*width: 100%;*/
-                /*height: 100%;*/
+        <style>
+            *{
+               font-family: 'Nanum Myeongjo', serif;
             }
 
             .container {
@@ -27,7 +18,6 @@
                 flex-direction: row;
                 align-items: center;
                 justify-content: center;
-                /*width: 100%;*/
                 height: 100vh;
             }
 
@@ -36,28 +26,42 @@
             }
 
             #leftImg {
-                /*position: absolute;*/
                 width: 400px;
-                /*order : 1*/
+                z-index : 2;
+                cursor: pointer;
+            }
+
+            #leftImg:hover{
+                 transition:opacity 0.5s linear;
             }
 
             .centerImg {
                 position: absolute;
-                left:0;
-                right:0;
-                margin-left:auto;
-                margin-right:auto;
+                left: 0;
+                right: 0;
+                margin-left: auto;
+                margin-right: auto;
                 /*top: 50px;*/
                 /*left: 480px;*/
                 width: 150px;
-                /*order : 2*/
+                z-index : 1;
             }
 
             #rightImg {
-                /*position: absolute;*/
                 width: 400px;
-                /*left: 600px;*/
-                /*order: 3*/
+                z-index : 3;
+                cursor: pointer;
+            }
+
+            .content:hover {
+                opacity: 70%;
+            }
+
+            .h1{
+                font-size : 40pt;
+                text-align : center;
+                padding-top : 50px;
+                padding-bottom : -100px;
             }
         </style>
         <script>
@@ -84,6 +88,7 @@
 
 
     <body>
+        <div class="h1">고양이 이상형 월드컵</div>
         <div class="container">
             <span class="content" id="left">
                 <img id="leftImg"

@@ -1,44 +1,109 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <head>
+        <meta charset="UTF-8">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-    <title>랜덤이냥</title>
 
-    <style>
-        /*.wrap{*/
-        /*    heiht : 300px;*/
-        /*}*/
-        body {
-            height: 98vh;
-            background-color: black;
-        }
-    </style>
-    <script>
-      $(document).ready(function () {
-        showCat();
-      });
+        <title>랜덤이냥</title>
 
-      function showCat() {
-        $.ajax({
-          type: "GET",
-          url: "/showCat",
-          data: {},
-          success: function (response) {
-            let imgUrl = response['cat']['picture_path'];
-            $("#img-cat").attr("src", imgUrl);
-          }
-        })
-      }
-    </script>
-</head>
-<body onclick="showCat()">
-<div class="wrap">
-    <div>
-        <img id="img-cat" class="bottom"
-             src="https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png"/>
-    </div>
-</div>
-</body>
+        <link href="https://fonts.googleapis.com/css2?family=Sunflower:wght@700&display=swap" rel="stylesheet">
+
+        <style>
+            * {
+                font-family: 'Sunflower', sans-serif;
+            }
+
+            body {
+                height: 98vh;
+            }
+
+            #img-cat {
+                width: 800px;
+                cursor: pointer;
+                transition:opacity 0.5s linear;
+            }
+
+            .h1, .h2, .h3 {
+                font-size: 20pt;
+                background-color: black;
+                color: yellow;
+                display: inline;
+                text-align: center;
+                background-color: black;
+            }
+
+            .h1 {
+                font-size: 60pt;
+            }
+
+            .h2 {
+                cursor: pointer;
+            }
+
+            .h3 {
+                color: white;
+            }
+
+            a:visited {
+                text-decoration: none;
+                decoration: none;
+            }
+
+            #img-cat:hover {
+                opacity: 70%;
+            }
+
+            a:link {
+                color: pink;
+                background-color: transparent;
+                text-decoration: none;
+            }
+
+            a:visited {
+                color: pink;
+                background-color: transparent;
+                text-decoration: none;
+            }
+
+        </style>
+        <script>
+            $(document).ready(function () {
+                showCat();
+            });
+
+            function showCat() {
+                $.ajax({
+                    type: "GET",
+                    url: "/showCat",
+                    data: {},
+                    success: function (response) {
+                        let imgUrl = response['cat']['picture_path'];
+                        $("#img-cat").attr("src", imgUrl);
+                    }
+                })
+            }
+
+            function moveMyCat() {
+              window.location.href = '/addCat'
+            }
+        </script>
+    </head>
+    <body onclick="showCat()">
+        <div class="wrap">
+            <div class="h1">고양이는 귀엽다</div>
+            <div class="h2">(고양이를 눌러보자)</div>
+            <div>
+                <img id="img-cat" class="bottom"
+                     src="https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png"/>
+            </div>
+            <div class="h3">
+                <a href="/idolCat"> 고양이 이상형 월드컵 하러가기</a>
+            </div>
+            <div class="h3">
+<!--                <a href="/addCat"> 우리 귀요미도 세상 사람들 다 알아줬으면 하는데 </a>-->
+                <button type="button" class="btn btn-light" onclick="moveMyCat()">우리 귀요미도 세상 사람들 다 알아줬으면 하는데</button>
+            </div>
+        </div>
+    </body>
 </html>

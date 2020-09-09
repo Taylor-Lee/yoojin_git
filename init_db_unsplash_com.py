@@ -43,7 +43,7 @@ def insert_cats(url):
 
 
 def insert_all():
-    # db.cats.drop()
+    db.cats.drop()
     catUrls = [
         'https://unsplash.com/s/photos/cat',
         'https://unsplash.com/s/photos/kitten',
@@ -55,6 +55,7 @@ def insert_all():
         'https://unsplash.com/s/photos/cute-jaguar-cat',
         'https://unsplash.com/s/photos/house-cat',
         'https://unsplash.com/s/photos/street-cat'
+        'https://unsplash.com/s/photos/my-cat'
     ]
 
     for catUrl in catUrls:
